@@ -1,0 +1,8 @@
+# path/to/project/root/.eslintignore
+# /node_modules/* and /bower_components/* in the project root are ignored by default
+
+# disable eslint in folder
+/node_modules
+/src/serviceWorker.js
+/src/app.test.js
+/src/index.js
