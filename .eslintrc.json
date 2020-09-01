@@ -19,7 +19,8 @@
     ],
     "rules": {
         "no-console": "off",
-        "camelcase" : "error" ,
+        "camelcase" : "error",
         "max-len" :"off"
+        // "no-unused-vars" : "off"
     }
 }
