@@ -8,6 +8,10 @@
 # testing
 /coverage
 
+# Declare files that will always have LF line endings on checkout.
+*.js text eol=lf
+*.jsx text eol=lf
+
 # production
 /build
 

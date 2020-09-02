@@ -1,14 +1,15 @@
 import React from 'react';
 import Layout from './components/Layout/Layout';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
+import Aux from './Hoc/Auxillary';
 
 function App() {
   return (
-    <div>
+    <Aux>
       <Layout>
         <BurgerBuilder />
       </Layout>
-    </div>
+    </Aux>
   );
 }
 

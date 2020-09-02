@@ -2,6 +2,8 @@ import React from 'react';
 import propTypes from 'prop-types';
 import classes from './Food.css';
 import FoodIngredient from './FoodIngredients/FoodIngridients';
+import Aux from '../../Hoc/Auxillary';
+import withClass from '../../Hoc/WithClass';
 
 const Food = (props) => {
   const { ingredient } = props;
@@ -15,11 +17,11 @@ const Food = (props) => {
   }
 
   return (
-    <div className={classes.Food}>
+    <Aux>
       <FoodIngredient type="bread-top" />
       {ingredients}
       <FoodIngredient type="bread-bottom" />
-    </div>
+    </Aux>
   );
 };
 
@@ -27,4 +29,4 @@ Food.propTypes = {
   ingredient: propTypes.objectOf(propTypes.any).isRequired,
 };
 
-export default Food;
+export default withClass(Food, classes.Food);

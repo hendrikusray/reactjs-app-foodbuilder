@@ -2,6 +2,8 @@ import React from 'react';
 import propTypes from 'prop-types';
 import classes from './BuildControls.css';
 import BuildControl from './BuildControl/BuildControl';
+import Aux from '../../../Hoc/Auxillary';
+import withClass from '../../../Hoc/WithClass';
 
 const control = [
   { label: 'Sayur', type: 'sayur' },
@@ -13,11 +15,11 @@ const control = [
 const BuildControls = (props) => {
   const {
     ingredientAdded, ingredientRemoved,
-    disable, price, purch,
+    disable, price, purch, ordered,
   } = props;
 
   return (
-    <div className={classes.BuildControls}>
+    <Aux>
       <p>
         Harga Sekarang :
         {' '}
@@ -33,8 +35,8 @@ const BuildControls = (props) => {
           price={price}
         />
       ))}
-      <button type="button" disabled={!purch} className={classes.OrderButton}>order</button>
-    </div>
+      <button type="button" onClick={ordered} disabled={!purch} className={classes.OrderButton}>order</button>
+    </Aux>
   );
 };
 
@@ -44,6 +46,7 @@ BuildControls.propTypes = {
   disable: propTypes.objectOf(propTypes.any).isRequired,
   price: propTypes.number.isRequired,
   purch: propTypes.bool.isRequired,
+  ordered: propTypes.func.isRequired,
 };
 
-export default BuildControls;
+export default withClass(BuildControls, classes.BuildControls);
