@@ -78,6 +78,10 @@ const BurgerBuilder = () => {
     setPurchasing(false);
   };
 
+  const purchesHandler = () => {
+    alert('order selanjutnyaa...');
+  };
+
   const disableInfo = { ...ingredient };
 
   const disableButton = _.mapValues(disableInfo, (val) => val <= 0);
@@ -86,7 +90,12 @@ const BurgerBuilder = () => {
     <Aux>
       <Modal show={purchasing} modalClosed={cancelPurchaseHandler}>
         {' '}
-        <ResultOrder ingredients={ingredient} />
+        <ResultOrder
+          ingredients={ingredient}
+          purchaseCancel={cancelPurchaseHandler}
+          purchaseContinues={purchesHandler}
+          price={totalPrice}
+        />
         {' '}
       </Modal>
       <Food ingredient={ingredient} />

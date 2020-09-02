@@ -2,10 +2,13 @@ import React from 'react';
 import propTypes from 'prop-types';
 import Aux from '../../../Hoc/Auxillary';
 import classes from './ResultOrder.css';
+import Button from '../../UI/Button/Button';
 
 // eslint-disable-next-line no-unused-vars
 const ResultOrder = (props) => {
-  const { ingredients } = props;
+  const {
+    ingredients, purchaseCancel, purchaseContinues, price,
+  } = props;
   const Summary = Object.keys(ingredients)
     .map((result) => (
       <li key={result}>
@@ -24,13 +27,25 @@ const ResultOrder = (props) => {
       <ul>
         {Summary}
       </ul>
-      <p> selesai ? </p>
+      <p>
+        <strong>
+          Total Price :
+          {' '}
+          {price.toFixed(2)}
+        </strong>
+      </p>
+      <p> selanjutnya atau batalkan? </p>
+      <Button btnType="Danger" clicked={purchaseCancel}>Batalkan</Button>
+      <Button btnType="Success" clicked={purchaseContinues}>Selanjutnya</Button>
     </Aux>
   );
 };
 
 ResultOrder.propTypes = {
   ingredients: propTypes.objectOf(propTypes.any).isRequired,
+  purchaseCancel: propTypes.func.isRequired,
+  purchaseContinues: propTypes.func.isRequired,
+  price: propTypes.number.isRequired,
 };
 
 export default ResultOrder;
