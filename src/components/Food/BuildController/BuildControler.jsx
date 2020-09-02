@@ -12,7 +12,8 @@ const control = [
 
 const BuildControls = (props) => {
   const {
-    ingredientAdded, ingredientRemoved, disable, price,
+    ingredientAdded, ingredientRemoved,
+    disable, price, purch,
   } = props;
 
   return (
@@ -32,6 +33,7 @@ const BuildControls = (props) => {
           price={price}
         />
       ))}
+      <button type="button" disabled={!purch} className={classes.OrderButton}>order</button>
     </div>
   );
 };
@@ -41,6 +43,7 @@ BuildControls.propTypes = {
   ingredientRemoved: propTypes.func.isRequired,
   disable: propTypes.objectOf(propTypes.any).isRequired,
   price: propTypes.number.isRequired,
+  purch: propTypes.bool.isRequired,
 };
 
 export default BuildControls;

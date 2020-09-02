@@ -23,6 +23,16 @@ const BurgerBuilder = () => {
   });
 
   const [totalPrice, setTotalPrice] = useState(4);
+  const [purchs, setPurches] = useState(false);
+
+  const updatePurchs = (ingredients) => {
+    console.log(ingredients);
+    const sum = Object.keys(ingredients)
+      .map((result) => ingredients[result])
+      .reduce((sux, el) => (sux + el), 0);
+    console.log(Object.keys(ingredients).map((x) => ingredients[x]).reduce((s, p) => (s + p), 0));
+    setPurches(sum > 0);
+  };
 
   const addIngredientHandler = (type) => {
     const oldCount = ingredient[type];
@@ -36,6 +46,7 @@ const BurgerBuilder = () => {
     const newPrice = oldPrice + PriceAddition;
     setTotalPrice(newPrice);
     setIngredient(updateIngredients);
+    updatePurchs(updateIngredients);
   };
 
   const removeIngredientHandler = (type) => {
@@ -53,6 +64,7 @@ const BurgerBuilder = () => {
     const newPrice = oldPrice - PriceAddition;
     setTotalPrice(newPrice);
     setIngredient(updateIngredients);
+    updatePurchs(updateIngredients);
   };
 
   const disableInfo = { ...ingredient };
@@ -67,6 +79,7 @@ const BurgerBuilder = () => {
         ingredientRemoved={removeIngredientHandler}
         disable={disableButton}
         price={totalPrice}
+        purch={purchs}
       />
     </Aux>
   );
