@@ -83,8 +83,10 @@ const BurgerBuilder = () => {
   };
 
   const disableInfo = { ...ingredient };
+  // copy from ingredient because ingredient is mutable therefore to change immutable using es6 spread operator
 
   const disableButton = _.mapValues(disableInfo, (val) => val <= 0);
+  // using lodash to check value of object if val <= 0 to true >= 0 to false
 
   return (
     <Aux>

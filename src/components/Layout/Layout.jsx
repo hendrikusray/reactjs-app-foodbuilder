@@ -1,18 +1,38 @@
-/* eslint-disable */
-import React from 'react';
+/* eslint-disable import/no-unresolved */
+import React, { useState } from 'react';
 import propsTypes from 'prop-types';
 import classes from './Layout.css';
 import Aux from '../../Hoc/Auxillary';
+import Toolbar from '../Navigation/Toolbar/Toolbar';
+import SideDrawer from '../Navigation/SideDrawer/SideDrawer';
 
+const layout = (props) => {
+  const [showSide, setShowSide] = useState(false);
 
-const layout = (props) => (
-  <Aux>
-    <div>Toolbar,sidedrawe,backdrop </div>
-    <main className={classes.Content}>
-      {props.children}
-    </main>
-  </Aux>
-);
+  const sideCloseDrawer = () => {
+    console.log('button-transparent');
+    setShowSide(false);
+  };
+
+  const sideOpenDrawer = () => {
+    setShowSide(true);
+  };
+
+  return (
+    <Aux>
+      <Toolbar
+        clickeds={sideOpenDrawer}
+      />
+      <SideDrawer
+        closed={sideCloseDrawer}
+        open={showSide}
+      />
+      <main className={classes.Content}>
+        {props.children}
+      </main>
+    </Aux>
+  );
+};
 
 layout.propsTypes = {
   children: propsTypes.node.isRequired,
