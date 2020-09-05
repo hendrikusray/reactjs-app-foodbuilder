@@ -13,7 +13,6 @@ const sideDrawer = (props) => {
     attachTheClass = [classes.SideDrawer, classes.Open];
   }
 
-  console.log(attachTheClass);
   return (
     <Aux>
       <BackDrop show={open} clickeds={closed} />

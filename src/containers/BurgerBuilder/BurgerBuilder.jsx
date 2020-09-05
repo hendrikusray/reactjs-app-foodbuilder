@@ -8,6 +8,9 @@ import Food from '../../components/Food/Food';
 import BuildControls from '../../components/Food/BuildController/BuildControler';
 import Modal from '../../components/UI/Modal/Modal';
 import ResultOrder from '../../components/Food/ResultOrder/ResultOrder';
+import Loader from '../../components/UI/Spinner/Spinner';
+import HTTP from '../../service/HTTP';
+import ErrorHandler from '../../error_handler/ErrorHandler';
 
 const priceIngredient = {
   sayur: 13,
@@ -27,6 +30,7 @@ const BurgerBuilder = () => {
   const [totalPrice, setTotalPrice] = useState(4);
   const [purchs, setPurches] = useState(false);
   const [purchasing, setPurchasing] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const updatePurchs = (ingredients) => {
     console.log(ingredients);
@@ -78,8 +82,43 @@ const BurgerBuilder = () => {
     setPurchasing(false);
   };
 
-  const purchesHandler = () => {
-    alert('order selanjutnyaa...');
+  const purchesHandler = async () => {
+    setLoading(true);
+
+    const payload = {
+      ingredients: ingredient,
+      price: totalPrice,
+      constumer: {
+        name: 'ray',
+        address: {
+          street: 'Srowolan',
+          city: 'yogyakarta',
+          district: 'Pakem',
+          country: 'Indonesia',
+        },
+        email: 'hendrikusray@gmail.com',
+      },
+      method: 'Payment',
+    };
+    // const sendPayload = await HTTP.post('orders', payload);
+    // sendPayload.status === 200 ? setLoading(false) : setLoading(true);
+    // if (sendPayload.status === 200) {
+    //   setLoading(false);
+    //   setPurchasing(false);
+    // } else {
+    //   setLoading(true);
+    //   setPurchasing(true);
+    // }
+
+    HTTP.post('/orders.json', payload)
+      .then(() => {
+        setLoading(false);
+        setPurchasing(false);
+      })
+      .catch(() => {
+        setLoading(true);
+        setPurchasing(true);
+      });
   };
 
   const disableInfo = { ...ingredient };
@@ -88,16 +127,24 @@ const BurgerBuilder = () => {
   const disableButton = _.mapValues(disableInfo, (val) => val <= 0);
   // using lodash to check value of object if val <= 0 to true >= 0 to false
 
+  let orderResult = (
+    <ResultOrder
+      ingredients={ingredient}
+      purchaseCancel={cancelPurchaseHandler}
+      purchaseContinues={purchesHandler}
+      price={totalPrice}
+    />
+  );
+
+  if (loading) {
+    orderResult = <Loader />;
+  }
+
   return (
     <Aux>
       <Modal show={purchasing} modalClosed={cancelPurchaseHandler}>
         {' '}
-        <ResultOrder
-          ingredients={ingredient}
-          purchaseCancel={cancelPurchaseHandler}
-          purchaseContinues={purchesHandler}
-          price={totalPrice}
-        />
+        {orderResult}
         {' '}
       </Modal>
       <Food ingredient={ingredient} />
@@ -112,4 +159,5 @@ const BurgerBuilder = () => {
     </Aux>
   );
 };
-export default BurgerBuilder;
+
+export default ErrorHandler(BurgerBuilder, HTTP);

@@ -19,7 +19,7 @@ const ResultOrder = (props) => {
         {ingredients[result]}
       </li>
     ));
-
+  console.log('result order render');
   return (
     <Aux>
       <h3 className={classes.Title}> OrderanKu </h3>

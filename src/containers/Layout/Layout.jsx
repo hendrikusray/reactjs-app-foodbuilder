@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import propsTypes from 'prop-types';
 import classes from './Layout.css';
 import Aux from '../../Hoc/Auxillary';
-import Toolbar from '../Navigation/Toolbar/Toolbar';
-import SideDrawer from '../Navigation/SideDrawer/SideDrawer';
+import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
+import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 
 const layout = (props) => {
   const [showSide, setShowSide] = useState(false);

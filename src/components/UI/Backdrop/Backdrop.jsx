@@ -5,7 +5,6 @@ import classes from './Backdrop.css';
 
 const backdrops = (props) => {
   const { show, clickeds } = props;
-  console.log(show, clickeds);
   // eslint-disable-next-line jsx-a11y/click-events-have-key-events
   return (show ? <div className={classes.Backdrop} onClick={clickeds} /> : null);
 };
