@@ -1,5 +1,6 @@
 import React from 'react';
 import propTypes from 'prop-types';
+import _ from 'lodash';
 import classes from './BuildControls.css';
 import BuildControl from './BuildControl/BuildControl';
 import Aux from '../../../Hoc/Auxillary';
@@ -31,7 +32,7 @@ const BuildControls = (props) => {
           label={result.label}
           added={() => ingredientAdded(result.type)}
           remove={() => ingredientRemoved(result.type)}
-          disable={disable[result.type]}
+          disable={_.isUndefined(disable[result.type]) ? true : disable[result.type]}
           price={price}
         />
       ))}

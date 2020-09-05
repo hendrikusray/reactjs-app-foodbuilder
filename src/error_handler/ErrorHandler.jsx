@@ -7,17 +7,20 @@ const errorHandler = (WrappedComponent, http) => (props) => {
   // eslint-disable-next-line no-unused-vars
   const [errors, setErrors] = useState(null);
 
-  useEffect(() => {
-    http.interceptors.request.use((req) => {
-      setErrors(null);
-      return req;
+  const Req = http.interceptors.request.use((req) => {
+    setErrors(null);
+    return req;
+  });
+
+  const Res = http.interceptors.response.use((res) => res,
+    (error) => {
+      setErrors(error);
     });
 
-    http.interceptors.response.use((res) => res,
-      (error) => {
-        setErrors(error);
-      });
-  }, []);
+  useEffect(() => () => {
+    http.interceptors.request.eject(Req);
+    http.interceptors.response.eject(Res);
+  }, [Req, Res]);
 
   const ClickedErrorHandler = () => {
     setErrors(null);

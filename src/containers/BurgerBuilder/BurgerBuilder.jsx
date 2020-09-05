@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable guard-for-in */
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
 import Aux from '../../Hoc/Auxillary';
 import Food from '../../components/Food/Food';
@@ -20,17 +20,26 @@ const priceIngredient = {
 };
 
 const BurgerBuilder = () => {
-  const [ingredient, setIngredient] = useState({
-    sayur: 0,
-    bacon: 0,
-    keju: 0,
-    daging: 0,
-  });
+  const [ingredient, setIngredient] = useState({});
 
   const [totalPrice, setTotalPrice] = useState(4);
   const [purchs, setPurches] = useState(false);
   const [purchasing, setPurchasing] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState(false);
+
+  const getData = async () => {
+    try {
+      const { data } = await HTTP.get('https://react-myapp-5852f.firebaseio.com/ingredients.json');
+      setIngredient(data);
+    } catch (error) {
+      setErrors(true);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   const updatePurchs = (ingredients) => {
     console.log(ingredients);
@@ -117,18 +126,34 @@ const BurgerBuilder = () => {
 
   const disableButton = _.mapValues(disableInfo, (val) => val <= 0);
   // using lodash to check value of object if val <= 0 to true >= 0 to false
+  let orderResult = null;
+  let FoodContainer = errors ? <p>Bahan Tidak Dapat di Load</p> : <Loader />;
 
-  let orderResult = (
-    <ResultOrder
-      ingredients={ingredient}
-      purchaseCancel={cancelPurchaseHandler}
-      purchaseContinues={purchesHandler}
-      price={totalPrice}
-    />
-  );
-
-  if (loading) {
-    orderResult = <Loader />;
+  if (!_.isEmpty(ingredient)) {
+    FoodContainer = (
+      <Aux>
+        <Food ingredient={ingredient} />
+        <BuildControls
+          ingredientAdded={addIngredientHandler}
+          ingredientRemoved={removeIngredientHandler}
+          disable={disableButton}
+          price={totalPrice}
+          ordered={PuchaseHandler}
+          purch={purchs}
+        />
+      </Aux>
+    );
+    orderResult = (
+      <ResultOrder
+        ingredients={ingredient}
+        purchaseCancel={cancelPurchaseHandler}
+        purchaseContinues={purchesHandler}
+        price={totalPrice}
+      />
+    );
+    if (loading) {
+      orderResult = <Loader />;
+    }
   }
 
   return (
@@ -138,15 +163,7 @@ const BurgerBuilder = () => {
         {orderResult}
         {' '}
       </Modal>
-      <Food ingredient={ingredient} />
-      <BuildControls
-        ingredientAdded={addIngredientHandler}
-        ingredientRemoved={removeIngredientHandler}
-        disable={disableButton}
-        price={totalPrice}
-        ordered={PuchaseHandler}
-        purch={purchs}
-      />
+      {FoodContainer}
     </Aux>
   );
 };
