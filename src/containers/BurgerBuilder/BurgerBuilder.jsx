@@ -100,15 +100,6 @@ const BurgerBuilder = () => {
       },
       method: 'Payment',
     };
-    // const sendPayload = await HTTP.post('orders', payload);
-    // sendPayload.status === 200 ? setLoading(false) : setLoading(true);
-    // if (sendPayload.status === 200) {
-    //   setLoading(false);
-    //   setPurchasing(false);
-    // } else {
-    //   setLoading(true);
-    //   setPurchasing(true);
-    // }
 
     HTTP.post('/orders.json', payload)
       .then(() => {

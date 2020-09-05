@@ -27,7 +27,7 @@ const errorHandler = (WrappedComponent, http) => (props) => {
     <Aux>
       <Modal
         show={errors}
-        clickeds={ClickedErrorHandler}
+        modalClosed={ClickedErrorHandler}
       >
         {errors ? errors.message : null}
       </Modal>

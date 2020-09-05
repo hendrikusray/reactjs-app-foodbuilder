@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 import propTypes from 'prop-types';
@@ -10,7 +11,7 @@ const backdrops = (props) => {
 };
 
 backdrops.propTypes = {
-  show: propTypes.bool.isRequired,
+  show: propTypes.any,
   clickeds: propTypes.func.isRequired,
 };
 
